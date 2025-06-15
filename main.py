@@ -9,8 +9,14 @@ from datetime import datetime, timedelta
 
 
 # Load environment variables
-load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY", None)
+
+if GOOGLE_API_KEY is None:
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Configure Gemini API
 genai.configure(api_key=GOOGLE_API_KEY)
